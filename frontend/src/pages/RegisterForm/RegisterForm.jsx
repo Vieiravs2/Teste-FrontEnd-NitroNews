@@ -3,9 +3,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import Input from '../../components/Input/Input';
 import Label from '../../components/Label/Label';
 import LoadingToast from '../../components/LoadingToast/LoadingToast';
-import axiosInstance from '../../services/axiosInstance';
-import { schema } from '../../utils/schema';
+import User from '../../services/User';
 import { typeErrors } from '../../utils/typeErrors';
+import backgroundRegister from './img/background.png'
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
@@ -17,14 +17,7 @@ export default function RegisterForm() {
     confirmacaoSenha: ''
   });
 
-  const [_errors, setErrors] = useState({});
-  
-  const [passwordRequirements, setPasswordRequirements] = useState({
-    length: false,
-    lowercase: false,
-    uppercase: false,
-    number: false
-  });
+  const infosPassword = User.validatePassword(formData.senha);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -33,61 +26,39 @@ export default function RegisterForm() {
       [name]: value
     }));
     if (name === 'senha') {
-      validatePassword(value);
+      User.validatePassword(value);
     }
   }
 
-  function validatePassword(value) {
-    setPasswordRequirements({
-      length: value.length >= 8,
-      lowercase: /[a-z]/.test(value),
-      uppercase: /[A-Z]/.test(value),
-      number: /[0-9]/.test(value)
-    });
-  }
-
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const validateFields = validate();
-    if (validateFields) {
+    const validateFields = User.validate(formData);
+    
+    if (validateFields.isValid) {
       const toastId = toast.info(<LoadingToast />, {
         autoClose: false
       });
 
-      axiosInstance.post('/', formData)
-        .then(response => {
-          const { erro } = response.data;
+      await User.submitFormData(formData)
+        .then((data) => {
+          const { erro } = data
           if (!erro) {
             toast.dismiss(toastId);
             toast.success('Registrado com sucesso!');
           }
         })
-        .catch(error => {
-          const { tipoErro } = error.response.data;
+        .catch((error) => {
+          const { tipoErro } = error;
           toast.dismiss(toastId);
           toast.error(typeErrors[tipoErro]);
         });
-    }
-  }
 
-  function validate() {
-    const { error } = schema.validate(formData, { abortEarly: false });
-    
-    if (!error) {
-      setErrors({});
-      return true;
+      return
     }
 
-    const newErrors = {};
-
-    error.details.forEach((detail) => {
-      newErrors[detail.path[0]] = detail.message;
-      _errors.message = detail.message;
-      toast.error(detail.message)
+    validateFields.errors.forEach(error => {
+      toast.error(error);
     });
-
-    setErrors(newErrors);
-    return false, _errors;
   }
 
   return (
@@ -130,16 +101,16 @@ export default function RegisterForm() {
                 className='w-full p-2 rounded-lg outline-none appearance-none h-9 bg-zinc-800'
               />
               <div className='mt-4 text-sm password-requirements'>
-                <p className={passwordRequirements.length ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
+                <p className={infosPassword.length ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
                   Mínimo de 8 caracteres
                 </p>
-                <p className={passwordRequirements.lowercase ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
+                <p className={infosPassword.lowercase ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
                   Pelo menos uma letra minúscula
                 </p>
-                <p className={passwordRequirements.uppercase ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
+                <p className={infosPassword.uppercase ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
                   Pelo menos uma letra maiúscula
                 </p>
-                <p className={passwordRequirements.number ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
+                <p className={infosPassword.number ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
                   Pelo menos um número
                 </p>
               </div>
@@ -161,10 +132,10 @@ export default function RegisterForm() {
             <a className='text-xs text-center underline cursor-pointer'>Já possuo uma conta</a>
           </form>
         </section>
-        <section 
-          id='backgroundpicture'
-          className='w-0 bg-cover lg:w-7/12 rounded-r-2xl'>
-        </section>
+        <img 
+          className='w-0 bg-cover lg:w-7/12 rounded-r-2xl'
+          src={backgroundRegister}
+        />
       </section>
     </>
   )

@@ -1,5 +1,5 @@
 import RegisterForm from './pages/RegisterForm/RegisterForm'
-import './App.css'
+import './index.css'
 
 function App() {
   return (
