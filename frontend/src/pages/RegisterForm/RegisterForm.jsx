@@ -105,9 +105,9 @@ export default function RegisterForm() {
   return (
     <>
       <ToastContainer />
-      <section className="w-1/2 h-[600px] bg-zinc-950 rounded-2xl flex">
-        <section id="form_container" className="flex flex-col px-10 pb-10 text-white basis-5/12">
-          <h1 className='my-5 font-sans text-3xl font-bold text-center text-white'>
+      <section className="w-5/6 md:w-1/2 lg:w-5/12 h-[600px] bg-zinc-950 rounded-2xl flex">
+        <section id="form_container" className="flex flex-col px-10 pb-10 text-white basis-full md:basis-8/12 lg:basis-5/12">
+          <h1 className='my-5 font-sans text-lg font-bold text-center text-white md:text-3xl'>
             Registre-se
             <span className="ml-2 inline-block w-3 h-3 bg-gradient-to-tr from-[#4158D0] via-[#C840C0] via-46% to-[#FFCC70] rounded-full"></span>
           </h1>
@@ -184,7 +184,7 @@ export default function RegisterForm() {
         </section>
         <section 
           id="backgroundpicture"
-          className="w-7/12 bg-cover rounded-r-2xl">
+          className="w-0 bg-cover lg:w-7/12 rounded-r-2xl">
         </section>
       </section>
     </>
