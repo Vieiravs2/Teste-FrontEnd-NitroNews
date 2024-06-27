@@ -1,17 +1,13 @@
 import { useState } from 'react';
-import Joi from 'joi';
-import axiosInstance from '../../services/axiosInstance';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './index.css';
 import Input from '../../components/Input/Input';
 import Label from '../../components/Label/Label';
 import LoadingToast from '../../components/LoadingToast/LoadingToast';
-
-const typeErrors = {
-  USUARIO_EXISTENTE: 'Esse email já está registrado',
-  CAMPO_INVALIDO: 'Campo inválido'
-}
+import axiosInstance from '../../services/axiosInstance';
+import { schema } from '../../utils/schema';
+import { typeErrors } from '../../utils/typeErrors';
+import 'react-toastify/dist/ReactToastify.css';
+import './index.css';
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -74,25 +70,6 @@ export default function RegisterForm() {
     }
   }
 
-  const schema = Joi.object({
-    nome: Joi.string().trim().required().messages({
-      'string.empty': 'Nome é obrigatório'
-    }),
-    email: Joi.string().trim().email({ tlds: { allow: false } }).required().messages({
-      'string.empty': 'Email é obrigatório',
-      'string.email': 'Email inválido'
-    }),
-    senha: Joi.string().required().min(8).pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$')).messages({
-      'string.empty': 'Senha é obrigatória',
-      'string.min': 'A senha deve ter no mínimo 8 caracteres',
-      'string.pattern.base': 'A senha deve conter pelo menos um caractere minúsculo, um caractere maiúsculo e um numeral'
-    }),
-    confirmacaoSenha: Joi.any().valid(Joi.ref('senha')).required().messages({
-      'any.only': 'A confirmação de senha deve ser idêntica à senha',
-      'any.required': 'Confirmação de senha é obrigatória'
-    })
-  });
-
   function validate() {
     const { error } = schema.validate(formData, { abortEarly: false });
     
@@ -152,7 +129,6 @@ export default function RegisterForm() {
                 onChange={handleChange}
                 className='w-full p-2 rounded-lg outline-none appearance-none h-9 bg-zinc-800'
               />
-              { _errors.senha && <p>{_errors.senha}</p> }
               <div className='mt-4 text-sm password-requirements'>
                 <p className={passwordRequirements.length ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
                   Mínimo de 8 caracteres
