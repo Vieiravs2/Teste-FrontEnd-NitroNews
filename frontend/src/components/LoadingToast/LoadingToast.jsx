@@ -1,5 +1,3 @@
-import React from 'react';
-
 function LoadingToast() {
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>

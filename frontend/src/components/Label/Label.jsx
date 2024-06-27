@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 function Label({ children, className }) {
   return (
@@ -7,5 +7,10 @@ function Label({ children, className }) {
     </label>
   );
 }
+
+Label.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string
+};
 
 export default Label;

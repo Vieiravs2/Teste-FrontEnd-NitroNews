@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 function Input({ type, name, value, onChange, className }) {
   return (
@@ -13,5 +13,13 @@ function Input({ type, name, value, onChange, className }) {
     </div>
   );
 }
+
+Input.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  className: PropTypes.string
+};
 
 export default Input;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Joi from 'joi';
 import axiosInstance from '../../services/axiosInstance';
 import { ToastContainer, toast } from 'react-toastify';
@@ -39,7 +39,7 @@ export default function RegisterForm() {
     if (name === 'senha') {
       validatePassword(value);
     }
-  };
+  }
 
   function validatePassword(value) {
     setPasswordRequirements({
@@ -105,12 +105,13 @@ export default function RegisterForm() {
 
     error.details.forEach((detail) => {
       newErrors[detail.path[0]] = detail.message;
+      _errors.message = detail.message;
       toast.error(detail.message)
     });
 
     setErrors(newErrors);
-    return false;
-  };
+    return false, _errors;
+  }
 
   return (
     <>
@@ -151,6 +152,7 @@ export default function RegisterForm() {
                 onChange={handleChange}
                 className='w-full p-2 rounded-lg outline-none appearance-none h-9 bg-zinc-800'
               />
+              { _errors.senha && <p>{_errors.senha}</p> }
               <div className='mt-4 text-sm password-requirements'>
                 <p className={passwordRequirements.length ? 'text-green-500 text-xs' : 'text-red-500 text-xs'}>
                   Mínimo de 8 caracteres
@@ -177,7 +179,7 @@ export default function RegisterForm() {
             </Label>
             <button 
               type='submit'
-              className='bg-gradient-to-tr mt-1 from-[#4158D0] via-[#C840C0] via-46% to-[#FFCC70] rounded-full text-white font-bold h-10 rounded-lg'>
+              className='bg-gradient-to-tr mt-1 from-[#4158D0] via-[#C840C0] via-46% to-[#FFCC70] rounded-full text-white font-bold h-10'>
                 Registrar
             </button>
             <a className='text-xs text-center underline cursor-pointer'>Já possuo uma conta</a>
