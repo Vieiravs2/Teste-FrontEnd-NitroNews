@@ -1,5 +1,9 @@
 # Teste de proficiência técnica front-end - Nitronews
 
+## Deploy da aplicação em React
+
+```https://deploynitronews.vercel.app/```
+
 ## Objetivo
 
 Desenvolver uma mini-aplicação (layout e código) que interaja com um backend rodando em docker através de requisições HTTP.
