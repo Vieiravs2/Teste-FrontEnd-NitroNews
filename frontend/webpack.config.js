@@ -6,15 +6,28 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'assets/[hash][ext][query]'
   },
   module: {
     rules: [
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
         },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+        ],
       },
     ],
   },
@@ -30,14 +43,15 @@ module.exports = {
     compress: true,
     port: 3000,
     open: true,
-    proxy: [{
-      '/api': {
+    proxy: [
+      {
+        context: ['/api'],
         target: 'http://localhost:8080',
         changeOrigin: true,
         secure: false,
         pathRewrite: { '^/api': '' },
       },
-    }],
+    ],
   },
   mode: 'development',
-};
+}
