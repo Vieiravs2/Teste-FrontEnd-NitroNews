@@ -23,17 +23,27 @@ O projeto está estruturado da seguinte forma:
 └── index.js
 ```
 # Descrição dos Arquivos e Pastas
-`assets/`: Contém uma imagem para o background.
-`dist/`: Pasta de saída dos arquivos após o build.
-`services/`:
+**assets/**: Contém uma imagem para o background.
+
+**dist/**: Pasta de saída dos arquivos após o build.
+
+**services/**:
+
   `axiosInstance.js`: Configuração do Axios para realizar requisições HTTP.
+
   `User.js`: Classe com métodos para validar dados e enviar formulário para a API.
-`utils/`:
+
+**utils/**:
+
   `schema.js`: Esquemas de validação JOI para o formulário de cadastro.
+
   `toastifyLoading.js`: Função para exibir notificações utilizando Toastify.
-`index.css`: Arquivo CSS com configurações básicas e uso do Tailwind CSS.
-`index.html`: Página HTML principal da aplicação.
-`index.js`: Ponto de entrada da aplicação, utilizando DOM para interação com a interface.
+
+**index.css**: Arquivo CSS com configurações básicas e uso do Tailwind CSS.
+
+**index.html**: Página HTML principal da aplicação.
+
+**index.js**: Ponto de entrada da aplicação, utilizando DOM para interação com a interface.
 
 # Configuração do Ambiente de Desenvolvimento
 
@@ -59,14 +69,18 @@ Isso abrirá automaticamente a aplicação no seu navegador padrão.
 A aplicação implementa um formulário de cadastro de usuários com validação no front-end, seguindo as regras especificadas no README.md.
 
 ## Detalhes da Implementação
-`Validação de Formulário com JOI`: Utilização do JOI para validar campos como nome, email, senha e confirmação de senha antes da submissão.
-`Estilização com Tailwind CSS`: Utilização do Tailwind CSS para estilizar os elementos HTML de forma eficiente e responsiva.
-`Notificações com Toastify JS`: Utilização do Toastify JS para exibir notificações ao usuário sobre erros de validação ou sucesso no cadastro.
-`Requisições HTTP com Axios`: Utilização do Axios para realizar requisições HTTP para o backend.
+**Validação de Formulário com JOI**: Utilização do JOI para validar campos como nome, email, senha e confirmação de senha antes da submissão.
+
+**Estilização com Tailwind CSS**: Utilização do Tailwind CSS para estilizar os elementos HTML de forma eficiente e responsiva.
+
+**Notificações com Toastify JS**: Utilização do Toastify JS para exibir notificações ao usuário sobre erros de validação ou sucesso no cadastro.
+
+**Requisições HTTP com Axios**: Utilização do Axios para realizar requisições HTTP para o backend.
 
 # Interação com o Backend
 As requisições para o backend são feitas no formato JSON e incluem o cabeçalho HTTP x-api-key com o valor ECA1AB4CE8583613A2C759B445E98. Erros de validação e respostas do backend são tratados.
 
 # Detalhes da Interação
-`Configuração de Requisições`: Utilização de Axios para enviar dados para o backend.
-`Tratamento de Erros`: Implementação de tratamento de erros para casos de campos inválidos ou emails já cadastrados.
+**Configuração de Requisições**: Utilização de Axios para enviar dados para o backend.
+
+**Tratamento de Erros**: Implementação de tratamento de erros para casos de campos inválidos ou emails já cadastrados.
