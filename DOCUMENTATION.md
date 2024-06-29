@@ -64,7 +64,7 @@ cd frontend
 
 Em seguida, instale as dependências do projeto utilizando npm ou yarn:
 
-```
+```bash
 npm install
 # ou
 yarn install
@@ -74,7 +74,8 @@ yarn install
 
 Para iniciar o servidor de desenvolvimento e visualizar a aplicação React, execute o seguinte comando:
 
-```npm run dev
+```bash
+npm run dev
 # ou
 yarn dev
 ```
