@@ -26,6 +26,9 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
-    "joi": "^17.13.3"
+    "axios": "^1.7.2",
+    "joi": "^17.13.3",
+    "react-toastify": "^10.0.5",
+    "toastify-js": "^1.12.0"
   }
 }

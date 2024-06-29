@@ -1,4 +1,5 @@
 import { schema } from "../utils/schema";
+import axiosInstance from "./axiosInstance";
 
 export default class User {
   static validate(user) {
@@ -20,5 +21,14 @@ export default class User {
       uppercase: /[A-Z]/.test(value),
       number: /[0-9]/.test(value)
     };
+  }
+
+  static async submitFormData(formData) {
+    try {
+      const response = await axiosInstance.post('/', formData);
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
   }
 }

@@ -1,11 +1,11 @@
 import './index.css'
 import User from './services/User';
+import typeErrors from './utils/typeErrors';
+import Toastify from 'toastify-js';
+import showLoadingToast from './utils/toastifyLoading';
 
-const inputName = document.querySelector('input[name="nome"]');
-const inputEmail = document.querySelector('input[name="email"]');
+const registerButton = document.querySelector('.register_user');
 const inputPassword = document.querySelector('input[name="senha"]');
-const inputPasswordConfirmation = document.querySelector('input[name="confirmacaoSenha"]');
-const registerButton = document.querySelector('.register_user')
 
 inputPassword.addEventListener('input', function() {
   const elements = {
@@ -33,12 +33,50 @@ inputPassword.addEventListener('input', function() {
   updateClass(elements.number, isValidPassword.number);
 });
 
-registerButton.addEventListener('click', function(event) {
+registerButton.addEventListener('click', async function(event) {
   event.preventDefault();
-  const nome = inputName.value;
-  const email = inputEmail.value;
-  const password = inputPassword.value;
-  const passwordConfirmation = inputPasswordConfirmation.value;
-  const forValidate = { nome, email, password, passwordConfirmation }
-  console.log(User.validate(forValidate))
+  const name = document.querySelector('input[name="nome"]').value;
+  const email = document.querySelector('input[name="email"]').value;
+  const password = document.querySelector('input[name="senha"]').value;
+  const passwordConfirmation = document.querySelector('input[name="confirmacaoSenha"]').value;
+  const forValidate = {
+    nome: name,
+    email,
+    senha: password,
+    confirmacaoSenha: passwordConfirmation
+  };
+  const validateFields = User.validate(forValidate);
+    
+    if (validateFields.isValid) {
+      showLoadingToast()
+      await User.submitFormData(forValidate)
+        .then((data) => {
+          const { erro } = data
+          if (!erro) {
+            Toastify({
+              text: "Registrado com sucesso!",
+              backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+              duration: 5000,
+            }).showToast();
+          }
+        })
+        .catch((error) => {
+          const { tipoErro } = error;
+          const typeErr = typeErrors()
+          Toastify({
+            text: typeErr[tipoErro],
+            backgroundColor: "linear-gradient(to right, #880808, #800020)",
+            duration: 5000,
+          }).showToast();
+        });
+      return
+    }
+
+    validateFields.errors.forEach(error => {
+      Toastify({
+        text: error,
+        backgroundColor: "linear-gradient(to right, #880808, #800020)",
+        duration: 5000,
+      }).showToast();
+    });
 })
