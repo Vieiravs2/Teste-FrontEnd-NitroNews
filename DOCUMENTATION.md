@@ -58,7 +58,9 @@ frontend/
 
 Para começar, acesse o diretório frontend com o comando:
 
-``cd frontend``
+```
+cd frontend
+```
 
 Em seguida, instale as dependências do projeto utilizando npm ou yarn:
 
